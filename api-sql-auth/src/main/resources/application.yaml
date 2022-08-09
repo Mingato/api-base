@@ -12,8 +12,16 @@ spring:
     password: password
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
-    show-sql=true
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.org.hibernate.dialect.SQLServer2008Dialect
+
+application:
+  client1:
+    client-id: ${CLIENT_ID:angular}
+    client-secret: ${CLIENT_SECRET:red_wm3@an6u1@r%}
+  security:
+    privateKey-file: ${PRIVATE_KEYFILE:private_key.pem}
+    publicKey-file: ${PUBLIC_KEY_FILE:public_key.pem}
