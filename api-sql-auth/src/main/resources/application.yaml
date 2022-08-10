@@ -25,3 +25,4 @@ application:
   security:
     privateKey-file: ${PRIVATE_KEYFILE:private_key.pem}
     publicKey-file: ${PUBLIC_KEY_FILE:public_key.pem}
+    enable-https: false
