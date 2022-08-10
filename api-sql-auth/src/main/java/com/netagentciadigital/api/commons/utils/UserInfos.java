@@ -1,5 +1,6 @@
 package com.netagentciadigital.api.commons.utils;
 
+import com.netagentciadigital.api.model.AppUser;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.jwt.SignedJWT;
@@ -13,15 +14,14 @@ import java.util.Map;
 
 public class UserInfos {
 
-    public static Usuario getUser(Authentication authentication){
-        return Usuario.builder()
+    public static AppUser getUser(Authentication authentication){
+        return AppUser.builder()
                 .id(getUserId(authentication))
                 .email(getEmail(authentication))
-                .nome(getName(authentication))
-                .codigosGrupo(getGroups(authentication))
-                .codigosPerfil(getPerfis(authentication))
+                .name(getName(authentication))
                 .build();
     }
+
     public static String getEmail(Authentication authentication) {
         return decodeToken(authentication).get("user_name").toString();
     }
@@ -31,7 +31,7 @@ public class UserInfos {
     }
 
     public static String getName(Authentication authentication) {
-        return decodeToken(authentication).get("nome").toString();
+        return decodeToken(authentication).get("name").toString();
     }
 
     public static List<String> getGroups(Authentication authentication) {

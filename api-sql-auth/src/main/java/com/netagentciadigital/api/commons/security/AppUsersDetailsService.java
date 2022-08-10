@@ -1,41 +1,41 @@
 package com.netagentciadigital.api.commons.security;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.netagentciadigital.api.model.AppUser;
+import com.netagentciadigital.api.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 
 @Service
 public class AppUsersDetailsService implements UserDetailsService {
 
     @Autowired
-    private RepositorioDeUsuario repositorioDeUsuario;
+    private AppUserRepository appUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = repositorioDeUsuario.findByEmail(email);
-        if (usuario == null) {
+        AppUser appUser = appUserRepository.findByEmail(email);
+        if (appUser == null) {
             throw new UsernameNotFoundException("Username invalid!");
         }
 
-        return new User(usuario.getEmail(), usuario.getSenha(), getPermissions(usuario));
+        return new User(appUser.getEmail(), appUser.getPassword(), getPermissions(appUser));
     }
 
-    private Collection<? extends GrantedAuthority> getPermissions(Usuario usuario) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        for(String perfil: usuario.getCodigosPerfil()) {
-            authorities.add(new SimpleGrantedAuthority(perfil));
-        }
-        return authorities;
+    private Collection<? extends GrantedAuthority> getPermissions(AppUser appUser) {
+        //Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        //for(String perfil: appUser.getCodigosPerfil()) {
+        //    authorities.add(new SimpleGrantedAuthority(perfil));
+        // }
+        return new HashSet<>();
     }
 
 }
