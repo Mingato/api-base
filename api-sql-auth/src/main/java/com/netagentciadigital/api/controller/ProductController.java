@@ -7,10 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @Slf4j
 @RestController
 @RequestMapping("/v1/products")
@@ -47,7 +50,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseBody> create(@RequestBody List<Product> products){
+    public ResponseEntity<ApiResponseBody> create(@RequestBody @Valid List<Product> products){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(productService.create(products))
@@ -57,7 +60,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody Product product){
+    public ResponseEntity<ApiResponseBody> update(@PathVariable("id") String id, @RequestBody @Valid Product product){
         ApiResponseBody result = ApiResponseBody.builder()
                 .status("200")
                 .result(productService.update(id, product))
